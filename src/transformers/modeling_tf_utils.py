@@ -1835,7 +1835,11 @@ def shape_list(tensor: tf.Tensor) -> List[int]:
     if tensor.shape == tf.TensorShape(None):
         return dynamic
 
-    static = tensor.shape.as_list()
+    static = tensor.shape
+    if type(static) == tuple:
+        static = list(static)
+    else:
+        static = static.as_list()
 
     return [dynamic[i] if s is None else s for i, s in enumerate(static)]
 
